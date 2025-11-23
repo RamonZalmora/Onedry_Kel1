@@ -9,6 +9,11 @@
             <option value="{{ $p->id }}">{{ $p->nama }}</option>
         @endforeach
     </select>
+    <div class="mb-3">
+    <label class="font-semibold">Tanggal Transaksi</label>
+    <input type="date" name="tanggal" class="w-full p-2 border rounded">
+</div>
+
 
     <label>Layanan</label>
     <select name="layanan_id" class="w-full p-2 border mb-3" id="layananSelect">

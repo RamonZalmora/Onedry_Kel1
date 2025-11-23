@@ -22,6 +22,8 @@
                 <th class="p-3 text-left font-semibold">Berat</th>
                 <th class="p-3 text-left font-semibold">Total</th>
                 <th class="p-3 text-left font-semibold">Status</th>
+                <th class="p-3 text-left font-semibold">Tanggal Diantar</th>
+                <th class="p-3 text-left font-semibold">Tanggal Diambil</th>
                 <th class="p-3 text-left font-semibold w-40">Aksi</th>
             </tr>
         </thead>
@@ -36,9 +38,8 @@
 
                 {{-- STATUS BADGE --}}
                 <td class="p-3">
-                    @php
-                        $status = strtolower($t->status);
-                    @endphp
+                    @php $status = strtolower($t->status); @endphp
+
                     @if($status == 'baru')
                         <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-semibold shadow-sm">🕓 Baru</span>
                     @elseif($status == 'proses')
@@ -52,15 +53,19 @@
                     @endif
                 </td>
 
+                <td class="p-3 text-gray-700">
+    {{ \Carbon\Carbon::parse($t->tanggal)->format('d M Y') }}
+</td>
+
+                <td>
+    {{ $t->tanggal_diambil ? \Carbon\Carbon::parse($t->tanggal_diambil)->format('d/m/Y') : '-' }}
+</td>
+
+
                 {{-- AKSI --}}
                 <td class="p-3 flex items-center gap-3">
-                    <a href="{{ route('transaksi.edit', $t) }}" 
-                       class="text-yellow-600 hover:text-yellow-700 font-semibold transition">✏️ Ubah Status</a>
-
-                    @if(Route::has('transaksi.show'))
-                        <a href="{{ route('transaksi.show', $t) }}" 
-                           class="text-indigo-600 hover:text-indigo-800 font-semibold transition">🔍 Detail</a>
-                    @endif
+                    <a href="{{ route('transaksi.show', $t->id) }}" 
+                       class="text-indigo-600 hover:text-indigo-800 font-semibold transition">🔍 Detail</a>
                 </td>
             </tr>
             @empty

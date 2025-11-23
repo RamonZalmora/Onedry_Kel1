@@ -9,8 +9,19 @@ class Transaksi extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'kode','pelanggan_id','layanan_id','berat','total','status','foto','kasir'
-    ];
+    'kode',
+    'pelanggan_id',
+    'layanan_id',
+    'berat',
+    'total',
+    'status',
+    'foto',
+    'kasir',
+    'tanggal',
+    'tanggal_diambil',
+
+];
+
 
     public function pelanggan()
     {

@@ -31,8 +31,12 @@ Route::middleware(['auth'])->group(function () {
      *  PROFIL USER
      *  (Upload foto profil + update data)
      *  ------------------------------- */
-    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    /** PROFIL USER */
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    
     // pakai PUT karena ini update data existing
 
     /** -------------------------------
@@ -64,4 +68,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/pengaturan/create', [PengaturanController::class, 'create'])->name('pengaturan.create');
         Route::post('/pengaturan', [PengaturanController::class, 'store'])->name('pengaturan.store');
     });
+    
+
+
+
+    Route::get('/transaksi/{transaksi}', [TransaksiController::class, 'show'])->name('transaksi.show');
+
 });

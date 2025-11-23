@@ -78,7 +78,7 @@
                 </a>
             @endif
 
-            <a href="{{ route('profile.show') }}" class="block py-2 px-4 rounded-md transition-all duration-150 hover:bg-purple-600/40 {{ request()->routeIs('profile.show') ? 'menu-active' : '' }}">
+            <a href="{{ route('profile.edit') }}" class="block py-2 px-4 rounded-md transition-all duration-150 hover:bg-purple-600/40 {{ request()->routeIs('profile.show') ? 'menu-active' : '' }}">
                 👤 Profil Saya
             </a>
         </nav>
