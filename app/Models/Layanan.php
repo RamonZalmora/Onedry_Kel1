@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Layanan extends Model
 {
     use HasFactory;
-    protected $fillable = ['nama','tipe','harga'];
+    protected $fillable = [
+        'nama', 
+        'tipe', 
+        'sub_item',
+        'harga',
+    ];
 
     public function transaksis()
     {
