@@ -6,18 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
+    public function up()
     {
         Schema::create('layanans', function (Blueprint $table) {
-            $table->id(); // otomatis bigIncrements -> unsigned BIGINT
-            $table->string('nama');
-            $table->string('tipe');
-            $table->decimal('harga', 12, 2);
+            $table->id();
+            $table->string('nama');                       // Cuci Setrika, Laundry Satuan, dll
+            $table->enum('tipe', ['per_kg','per_item']);  // cara hitung
+            $table->string('sub_item')->nullable();       // Kemeja, Jaket, Baju Batik, dll
+            $table->integer('harga');                     // harga final
             $table->timestamps();
         });
     }
 
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('layanans');
     }
