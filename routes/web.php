@@ -45,6 +45,13 @@ Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->n
     Route::middleware(['role:admin'])->group(function () {
         Route::resource('pelanggan', PelangganController::class);
         Route::resource('transaksi', TransaksiController::class)->except(['show']);
+    
+        // Laporan Routes
+        Route::prefix('laporan')->name('laporan.')->group(function () {
+            Route::get('/', [LaporanController::class, 'index'])->name('index');
+            Route::get('/harian', [LaporanController::class, 'harian'])->name('harian');
+            Route::get('/bulanan', [LaporanController::class, 'bulanan'])->name('bulanan');
+        });
     });
 
     /** -------------------------------

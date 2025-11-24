@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama');                       // Cuci Setrika, Laundry Satuan, dll
             $table->enum('tipe', ['per_kg','per_item']);  // cara hitung
-            $table->string('sub_item')->nullable();       // Kemeja, Jaket, Baju Batik, dll
+            $table->string('sub_item')->nullable();   // Kemeja, Jaket, Baju Batik, dll
             $table->integer('harga');                     // harga final
             $table->timestamps();
         });
