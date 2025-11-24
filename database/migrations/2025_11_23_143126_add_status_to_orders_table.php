@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up()
 {
-    Schema::table('orders', function (Blueprint $table) {
+    Schema::table('transaksis', function (Blueprint $table) {
         $table->string('status_pengerjaan')->default('baru');
         $table->string('status_pembayaran')->default('belum lunas');
     });
@@ -19,7 +19,7 @@ return new class extends Migration
 
 public function down()
 {
-    Schema::table('orders', function (Blueprint $table) {
+    Schema::table('transaksis', function (Blueprint $table) {
         $table->dropColumn(['status_pengerjaan', 'status_pembayaran']);
     });
 }

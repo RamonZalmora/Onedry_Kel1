@@ -42,4 +42,35 @@ class LaporanController extends Controller
 
         return $writer->toBrowser();
     }
+
+    /**
+     * Menampilkan laporan harian
+     */
+    public function harian()
+    {
+        $tanggal = request('tanggal', now()->format('Y-m-d'));
+        $transaksis = Transaksi::with(['pelanggan', 'layanan'])
+            ->whereDate('created_at', $tanggal)
+            ->latest()
+            ->get();
+
+        return view('laporan.harian', compact('transaksis', 'tanggal'));
+    }
+
+    /**
+     * Menampilkan laporan bulanan
+     */
+    public function bulanan()
+    {
+        $bulan = request('bulan', now()->format('Y-m'));
+        $transaksis = Transaksi::with(['pelanggan', 'layanan'])
+            ->whereYear('created_at', '=', date('Y', strtotime($bulan)))
+            ->whereMonth('created_at', '=', date('m', strtotime($bulan)))
+            ->latest()
+            ->get();
+
+        $totalPendapatan = $transaksis->sum('total');
+
+        return view('laporan.bulanan', compact('transaksis', 'bulan', 'totalPendapatan'));
+    }
 }
