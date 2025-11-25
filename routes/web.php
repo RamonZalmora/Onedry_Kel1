@@ -66,18 +66,29 @@ Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->n
         Route::get('/laporan/export-excel', [LaporanController::class, 'exportExcel'])->name('laporan.excel');
     });
 
-    /** -------------------------------
-     *  OWNER ONLY
-     *  (Kelola akun pengguna)
-     *  ------------------------------- */
-    Route::middleware(['role:owner'])->group(function () {
-        Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('pengaturan.index');
-        Route::get('/pengaturan/create', [PengaturanController::class, 'create'])->name('pengaturan.create');
-        Route::post('/pengaturan', [PengaturanController::class, 'store'])->name('pengaturan.store');
+   /** -------------------------------
+ *  OWNER ONLY
+ *  (Kelola akun pengguna)
+ *  ------------------------------- */
+Route::middleware(['role:owner'])->group(function () {
+
+    Route::prefix('pengaturan')->name('pengaturan.')->group(function () {
+
+        // List akun
+        Route::get('/', [PengaturanController::class, 'index'])->name('index');
+
+        // Tambah akun
+        Route::get('/create', [PengaturanController::class, 'create'])->name('create');
+        Route::post('/', [PengaturanController::class, 'store'])->name('store');
+
+        // Edit akun
+        Route::get('/{id}/edit', [PengaturanController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [PengaturanController::class, 'update'])->name('update');
+
+        // Hapus akun
+        Route::delete('/{id}', [PengaturanController::class, 'destroy'])->name('destroy');
     });
-    
-
-
+});
 
     Route::get('/transaksi/{transaksi}', [TransaksiController::class, 'show'])->name('transaksi.show');
 
