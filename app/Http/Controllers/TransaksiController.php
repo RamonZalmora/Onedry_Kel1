@@ -44,8 +44,14 @@ class TransaksiController extends Controller
         // Upload foto
         $fotoPath = null;
         if ($request->hasFile('foto')) {
-            $fotoPath = $request->file('foto')->store('foto_cucian', 'public');
-        }
+            $namaFile = time() . '_' . $request->foto->getClientOriginalName();
+
+        // Simpan ke folder public/uploads/foto_cucian
+            $request->foto->move(public_path('uploads/foto_cucian'), $namaFile);
+
+            $fotoPath = 'uploads/foto_cucian/' . $namaFile;
+}
+
 
         // Simpan transaksi
         Transaksi::create([

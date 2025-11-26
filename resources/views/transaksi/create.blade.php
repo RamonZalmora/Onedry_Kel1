@@ -16,13 +16,20 @@
 
 
     <label>Layanan</label>
-    <select name="layanan_id" class="w-full p-2 border mb-3" id="layananSelect">
-        @foreach($layanans as $l)
-            <option value="{{ $l->id }}" data-harga="{{ $l->harga }}">{{ $l->nama }} - Rp {{ number_format($l->harga,0,',','.') }}</option>
-        @endforeach
-    </select>
+<select name="layanan_id" class="w-full p-2 border mb-3" id="layananSelect">
+    @foreach($layanans as $l)
+        <option value="{{ $l->id }}" data-harga="{{ $l->harga }}">
+            {{ $l->nama }}
+            @if($l->tipe == 'per_item' && $l->sub_item)
+                ({{ $l->sub_item }})
+            @endif
+            - Rp {{ number_format($l->harga, 0, ',', '.') }}
+        </option>
+    @endforeach
+</select>
 
-    <label>Berat (Kg)</label>
+
+    <label>Berat (Kg)/ Satuan</label>
     <input type="number" step="0.1" name="berat" id="beratInput" class="w-full p-2 border mb-3">
 
     <label>Perkiraan Total</label>

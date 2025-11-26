@@ -19,7 +19,7 @@
 
             <div class="space-y-2 text-gray-700">
                 <p><strong>Nama:</strong> {{ $transaksi->pelanggan->nama }}</p>
-                <p><strong>No HP:</strong> {{ $transaksi->pelanggan->telepon }}</p>
+                <p><strong>No HP:</strong> {{ $transaksi->pelanggan->no_hp }}</p>
                 <p><strong>Alamat:</strong> {{ $transaksi->pelanggan->alamat }}</p>
             </div>
 
@@ -44,7 +44,7 @@
             @if($transaksi->foto)
             <div class="mt-5">
                 <p class="font-bold text-gray-700 mb-2">Foto Cucian</p>
-                <img src="{{ asset('storage/'.$transaksi->foto) }}" 
+                <img src="{{ asset($transaksi->foto) }}" 
                      class="rounded-lg shadow w-52 border border-gray-200">
             </div>
             @endif
