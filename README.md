@@ -1,3 +1,5 @@
+<div align="center">
+
 # 🧺 OneDry – Laundry Management System
 
 **OneDry** adalah sistem manajemen laundry berbasis web yang dikembangkan oleh **Kelompok 1**.  
@@ -12,114 +14,194 @@ OneDry dirancang untuk membantu operasional laundry seperti:
 - Pembuatan laporan (khusus owner)  
 - Manajemen akun (khusus owner)
 
-Dengan adanya sistem otorisasi berbasis **role (admin & owner)**, setiap fitur hanya dapat diakses oleh pengguna yang memiliki izin sesuai fungsinya.
+</div>
 
 ---
 
-# 📦 **Fitur Unggulan**
-- 👥 **Manajemen Pelanggan**
-- ⚙️ **Pengaturan Layanan Laundry (Owner Only)**
-- 💸 **Input Transaksi + Perhitungan Otomatis**
-- 🖼️ Upload foto cucian
-- 📦 Status cucian (baru, proses, selesai, diambil)
-- 📊 Laporan harian & bulanan
-- 🧑‍💼 Manajemen akun (Owner Only)
-- 🔐 Autentikasi & Role-based Authorization
-- 🎨 UI modern menggunakan TailwindCSS
-- ⏱️ Realtime Server Time
-- 🌤️ Widget Cuaca (API Open-Meteo)
-- 📈 Grafik Penghasilan Mingguan
+## 📋 Daftar Isi
+
+- [✨ Fitur Utama](#-fitur-utama)
+- [🚀 Instalasi](#-instalasi)
+- [⚙️ Konfigurasi](#️-konfigurasi)
+- [🔐 Akun Login](#-akun-login-sistem)
+- [➕ Fitur Opsional](#-fitur-opsional)
+- [🛠️ Teknologi](#️-teknologi-yang-digunakan)
+- [📸 Screenshot](#-screenshot)
+- [🤝 Kontribusi](#-kontribusi)
 
 ---
 
-# 🚀 **Cara Install OneDry Setelah `git clone`**
+## ✨ Fitur Utama
 
-Ikuti langkah berikut agar sistem dapat berjalan tanpa error.
+<table>
+<tr>
+<td width="50%">
+
+### 👥 Manajemen Pengguna
+- Multi-level user (Owner & Admin)
+- Authentication & Authorization
+- Role-based access control
+
+### 💼 Manajemen Transaksi
+- Pencatatan order laundry
+- Tracking status pengerjaan
+- Riwayat transaksi lengkap
+
+</td>
+<td width="50%">
+
+### 📊 Dashboard & Laporan
+- Statistik real-time
+- Visualisasi data dengan Chart.js
+- Export laporan
+
+### 🌤️ Integrasi API
+- Open-Meteo API untuk cuaca
+- Waktu Sarver Realtime
+- RESTful API ready
+
+</td>
+</tr>
+</table>
 
 ---
 
-## 1️⃣ **Clone Repository dari GitHub**
+## 🚀 Instalasi
+
+> **Prerequisites:** Pastikan Anda telah menginstall PHP 8.1+, Composer, MySQL, dan Node.js
+
+### Quick Start
+
 ```bash
+# 1️⃣ Clone repository
 git clone https://github.com/RamonZalmora/Onedry_Kel1.git
-cd Onedry_Kel1
-2️⃣ Install Dependencies Laravel
-bash
-Copy code
+
+# 2️⃣ Install dependencies
 composer install
-3️⃣ Copy File Environment
-bash
-Copy code
+
+# 3️⃣ Setup environment
 cp .env.example .env
-Lalu edit .env untuk koneksi database:
 
-makefile
-Copy code
-DB_DATABASE=onedry
-DB_USERNAME=root
-DB_PASSWORD=
-4️⃣ Generate Key
-bash
-Copy code
+# 4️⃣ Generate application key
 php artisan key:generate
-5️⃣ Migrasi Database + Seeder (Wajib)
-Seeder akan membuat akun Owner & Admin otomatis.
 
-bash
-Copy code
+# 5️⃣ Setup database (edit .env terlebih dahulu)
 php artisan migrate --seed
-6️⃣ Buat Storage Link
-bash
-Copy code
+
+# 6️⃣ Create storage link
 php artisan storage:link
-7️⃣ Jalankan Server
-bash
-Copy code
+
+# 7️⃣ Start development server
 php artisan serve
-Akses aplikasi di browser:
+```
 
-👉 http://127.0.0.1:8000
+<div align="center">
 
-➕ OPSIONAL
-🔧 Migrasi ulang (reset database)
-bash
-Copy code
+**🎉 Aplikasi siap digunakan!**  
+Buka browser dan akses **http://127.0.0.1:8000**
+
+</div>
+
+---
+
+## ⚙️ Konfigurasi
+
+Pastikan sistem Anda memenuhi requirements:
+
+- **PHP** >= 8.1
+- **Composer**
+- **MySQL** / SqlLite
+- **Node.js & NPM** (untuk compile assets)
+
+---
+
+## 🔐 Akun Login Sistem
+
+### 👑 Owner
+
+| Email              | Password   |
+|--------------------|------------|
+| owner@gmail.com    | 12345678   |
+
+### 👤 Admin / Karyawan
+
+| Email              | Password     |
+|--------------------|--------------|
+| mimin@gmail.com    | miminn1234   |
+
+---
+
+## ➕ Fitur Opsional
+
+### 🔧 Migrasi Ulang (Reset Database)
+
+Gunakan perintah ini untuk mereset database dari awal:
+
+```bash
 php artisan migrate:fresh --seed
-🧪 Testing Laravel
-bash
-Copy code
+```
+
+### 🧪 Testing Laravel
+
+Jalankan test suite:
+
+```bash
 php artisan test
-🎨 Compile asset (Tailwind / JS)
-bash
-Copy code
+```
+
+### 🎨 Compile Assets (Tailwind CSS / JavaScript)
+
+Install dependencies dan compile assets:
+
+```bash
 npm install
 npm run dev
-🔐 Akun Login Sistem
-👑 Owner
-Email	Password
-owner@gmail.com	12345678
+```
 
-👤 Admin / Karyawan
-Email	Password
-mimin@gmail.com	miminn1234
+Untuk production build:
 
-🛠️ Teknologi yang Digunakan
-Laravel 10
+```bash
+npm run build
+```
 
-PHP 8.1+
+---
 
-MySQL
+## 🛠️ Teknologi yang Digunakan
 
-Tailwind CSS
+| Teknologi          | Versi/Keterangan           |
+|--------------------|----------------------------|
+| **Laravel**        | 10.x                       |
+| **PHP**            | 8.1+                       |
+| **MySQL/sqlLite**  | Database                   |
+| **Tailwind CSS**   | Framework CSS              |
+| **Blade Template** | Template Engine            |
+| **Chart.js**       | Library Visualisasi Data   |
+| **Laravel Breeze** | Authentication Scaffolding |
+| **Open-Meteo API** | Weather API Integration    |
+| **Composer**       | Dependency Manager (PHP)   |
+| **NPM / Vite**     | Asset Bundling             |
 
-Blade Template
+---
 
-Chart.js
+## 📝 Catatan
 
-Laravel Breeze
+- Pastikan ekstensi PHP yang diperlukan sudah aktif (`pdo_mysql`, `mbstring`, `openssl`, dll)
+- Untuk development, gunakan `npm run dev`
+- Untuk production, gunakan `npm run build`
+- Jangan lupa backup database sebelum menjalankan `migrate:fresh`
 
-Open-Meteo API
+---
 
-Composer
+## 👥 Tim Pengembang
 
-NPM / Vite
+**Kelompok 1 SistemInformasi Universitas Riau 2025**
 
+---
+
+## 🤝 Kontribusi
+
+Jika ingin berkontribusi, silakan fork repository ini dan buat pull request.
+
+---
+
+**Happy Coding! 🚀**
