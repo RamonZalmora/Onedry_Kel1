@@ -54,17 +54,30 @@ Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->n
         });
     });
 
-    /** -------------------------------
-     *  ADMIN & OWNER (akses gabungan)
-     *  ------------------------------- */
-    Route::middleware(['role:admin,owner'])->group(function () {
-        Route::resource('layanan', LayananController::class)->except(['show']);
+   /** -------------------------------
+ *  AKSES GABUNGAN ADMIN & OWNER
+ *  (pelanggan, layanan, transaksi, laporan)
+ *  ------------------------------- */
+Route::middleware(['role:admin,owner'])->group(function () {
 
-        // Laporan
-        Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
-        Route::get('/laporan/export-pdf', [LaporanController::class, 'exportPdf'])->name('laporan.pdf');
-        Route::get('/laporan/export-excel', [LaporanController::class, 'exportExcel'])->name('laporan.excel');
+    /* Pelanggan */
+    Route::resource('pelanggan', PelangganController::class);
+
+    /* Layanan */
+    Route::resource('layanan', LayananController::class)->except(['show']);
+
+    /* Transaksi */
+    Route::resource('transaksi', TransaksiController::class);
+
+    /* Laporan */
+    Route::prefix('laporan')->name('laporan.')->group(function () {
+        Route::get('/', [LaporanController::class, 'index'])->name('index');
+        Route::get('/harian', [LaporanController::class, 'harian'])->name('harian');
+        Route::get('/bulanan', [LaporanController::class, 'bulanan'])->name('bulanan');
+        Route::get('/export-pdf', [LaporanController::class, 'exportPdf'])->name('pdf');
+        Route::get('/export-excel', [LaporanController::class, 'exportExcel'])->name('excel');
     });
+});
 
    /** -------------------------------
  *  OWNER ONLY

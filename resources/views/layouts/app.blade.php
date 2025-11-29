@@ -55,33 +55,63 @@
         </div>
 
         <!-- Menu Navigasi -->
-        <nav class="flex-1 p-4 space-y-2 text-sm font-medium">
-            <a href="{{ route('dashboard') }}" class="block py-2 px-4 rounded-md transition-all duration-150 hover:bg-purple-600/40 {{ request()->routeIs('dashboard') ? 'menu-active' : '' }}">
-                🏠 Dashboard
-            </a>
-            <a href="{{ route('pelanggan.index') }}" class="block py-2 px-4 rounded-md transition-all duration-150 hover:bg-purple-600/40 {{ request()->routeIs('pelanggan.*') ? 'menu-active' : '' }}">
-                👥 Pelanggan
-            </a>
-            <a href="{{ route('layanan.index') }}" class="block py-2 px-4 rounded-md transition-all duration-150 hover:bg-purple-600/40 {{ request()->routeIs('layanan.*') ? 'menu-active' : '' }}">
-                ⚙️ Layanan
-            </a>
-            <a href="{{ route('transaksi.index') }}" class="block py-2 px-4 rounded-md transition-all duration-150 hover:bg-purple-600/40 {{ request()->routeIs('transaksi.*') ? 'menu-active' : '' }}">
-                💸 Transaksi
-            </a>
-            <a href="{{ route('laporan.index') }}" class="block py-2 px-4 rounded-md transition-all duration-150 hover:bg-purple-600/40 {{ request()->routeIs('laporan.*') ? 'menu-active' : '' }}">
-                📊 Laporan
-            </a>
+<nav class="flex-1 p-4 space-y-2 text-sm font-medium">
 
-            @if(auth()->user()->role == 'owner')
-                <a href="{{ route('pengaturan.index') }}" class="block py-2 px-4 rounded-md transition-all duration-150 hover:bg-purple-600/40 {{ request()->routeIs('pengaturan.*') ? 'menu-active' : '' }}">
-                    🧑‍💼 Pengaturan
-                </a>
-            @endif
+<!-- Dashboard -->
+<a href="{{ route('dashboard') }}"
+   class="block py-2 px-4 rounded-md transition-all hover:bg-purple-600/40 
+   {{ request()->routeIs('dashboard') ? 'menu-active' : '' }}">
+    🏠 Dashboard
+</a>
 
-            <a href="{{ route('profile.edit') }}" class="block py-2 px-4 rounded-md transition-all duration-150 hover:bg-purple-600/40 {{ request()->routeIs('profile.show') ? 'menu-active' : '' }}">
-                👤 Profil Saya
-            </a>
-        </nav>
+<!-- Pelanggan -->
+<a href="{{ route('pelanggan.index') }}"
+   class="block py-2 px-4 rounded-md transition-all hover:bg-purple-600/40 
+   {{ request()->routeIs('pelanggan.*') ? 'menu-active' : '' }}">
+    👥 Pelanggan
+</a>
+
+<!-- Layanan -->
+<a href="{{ route('layanan.index') }}"
+   class="block py-2 px-4 rounded-md transition-all hover:bg-purple-600/40 
+   {{ request()->routeIs('layanan.*') ? 'menu-active' : '' }}">
+    ⚙️ Layanan
+</a>
+
+<!-- Transaksi -->
+<a href="{{ route('transaksi.index') }}"
+   class="block py-2 px-4 rounded-md transition-all hover:bg-purple-600/40 
+   {{ request()->routeIs('transaksi.*') ? 'menu-active' : '' }}">
+    💸 Transaksi
+</a>
+
+<!-- 📊 Laporan → hanya OWNER -->
+@if(auth()->user()->role === 'owner')
+    <a href="{{ route('laporan.index') }}"
+       class="block py-2 px-4 rounded-md transition-all hover:bg-purple-600/40 
+       {{ request()->routeIs('laporan.*') ? 'menu-active' : '' }}">
+        📊 Laporan
+    </a>
+@endif
+
+<!-- 🧑‍💼 Pengaturan akun → hanya OWNER -->
+@if(auth()->user()->role === 'owner')
+    <a href="{{ route('pengaturan.index') }}"
+       class="block py-2 px-4 rounded-md transition-all hover:bg-purple-600/40 
+       {{ request()->routeIs('pengaturan.*') ? 'menu-active' : '' }}">
+        🧑‍💼 Pengaturan
+    </a>
+@endif
+
+<!-- 👤 Profil Semua Role -->
+<a href="{{ route('profile.edit') }}"
+   class="block py-2 px-4 rounded-md transition-all hover:bg-purple-600/40 
+   {{ request()->routeIs('profile.*') ? 'menu-active' : '' }}">
+    👤 Profil Saya
+</a>
+
+</nav>
+
 
         <!-- Footer Sidebar -->
         <div class="p-4 border-t border-purple-500/40 bg-purple-900/30 text-purple-100">
