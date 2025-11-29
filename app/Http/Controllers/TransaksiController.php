@@ -14,8 +14,8 @@ class TransaksiController extends Controller
     public function index()
     {
         $transaksis = Transaksi::with(['pelanggan', 'layanan'])
-                        ->latest()
-                        ->paginate(12);
+            ->latest()
+            ->paginate(12);
 
         return view('transaksi.index', compact('transaksis'));
     }
@@ -31,17 +31,18 @@ class TransaksiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'pelanggan_id'  => 'required|exists:pelanggans,id',
-            'layanan_id'    => 'required|exists:layanans,id',
-            'berat'         => 'required|numeric|min:0.1',
-            'tanggal'       => 'required|date',
-            'foto'          => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            'pelanggan_id'    => 'required|exists:pelanggans,id',
+            'layanan_id'      => 'required|exists:layanans,id',
+            'berat'           => 'required|numeric|min:0.1',
+            'tanggal'         => 'required|date',
+            'tanggal_diambil' => 'nullable|date|after_or_equal:tanggal',
+            'foto'            => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
         ]);
 
         $layanan = Layanan::findOrFail($request->layanan_id);
         $total   = $layanan->harga * $request->berat;
 
-        // 📌 Upload foto ke storage
+        // Upload foto cucian
         $fotoPath = null;
         if ($request->hasFile('foto')) {
             $fotoPath = $request->file('foto')->store('foto_cucian', 'public');
@@ -58,10 +59,19 @@ class TransaksiController extends Controller
             'foto'              => $fotoPath,
             'kasir'             => auth()->user()->name,
             'tanggal'           => $request->tanggal,
-            'tanggal_diambil'   => null,
+            'tanggal_diambil'   => $request->tanggal_diambil, // 🟣 manual input (opsional)
         ]);
 
         return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil dibuat.');
+    }
+
+    public function show(Transaksi $transaksi)
+    {
+        $transaksi->load(['pelanggan', 'layanan']);
+
+        $statuses = ['baru', 'proses', 'selesai', 'diambil'];
+
+        return view('transaksi.show', compact('transaksi', 'statuses'));
     }
 
     public function edit(Transaksi $transaksi)
@@ -79,10 +89,14 @@ class TransaksiController extends Controller
 
         $tanggalDiambil = $transaksi->tanggal_diambil;
 
+        // Jika status menjadi selesai → otomatis beri tanggal jika belum ada
         if ($request->status === 'selesai') {
-            $tanggalDiambil = now();
+            if (!$transaksi->tanggal_diambil) {
+                $tanggalDiambil = now();
+            }
         }
 
+        // Jika status bukan selesai → kosongkan tanggal diambil
         if ($request->status !== 'selesai') {
             $tanggalDiambil = null;
         }
@@ -92,27 +106,17 @@ class TransaksiController extends Controller
             'tanggal_diambil'   => $tanggalDiambil,
         ]);
 
-        return redirect()->route('transaksi.index')->with('success', 'Status transaksi diperbarui.');
+        return redirect()->route('transaksi.index')->with('success', 'Status transaksi berhasil diperbarui.');
     }
 
     public function destroy(Transaksi $transaksi)
     {
-        // Hapus foto di storage
         if ($transaksi->foto) {
             Storage::disk('public')->delete($transaksi->foto);
         }
 
         $transaksi->delete();
 
-        return redirect()->route('transaksi.index')->with('success', 'Transaksi dihapus.');
-    }
-
-    public function show(Transaksi $transaksi)
-    {
-        $transaksi->load(['pelanggan', 'layanan']);
-
-        $statuses = ['baru', 'proses', 'selesai', 'diambil'];
-
-        return view('transaksi.show', compact('transaksi', 'statuses'));
+        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil dihapus.');
     }
 }

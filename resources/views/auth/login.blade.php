@@ -8,6 +8,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <script>
         tailwind.config = {
             theme: {
@@ -24,6 +25,7 @@
             }
         }
     </script>
+
     <style>
         .auth-bg {
             background-image: url("{{ asset('images/laundry_bg.jpg') }}");
@@ -50,30 +52,56 @@
 </head>
 
 <body class="font-sans">
+
     <div class="grid-container">
-        <!-- Left Column -->
+
+        <!-- LEFT SIDE -->
         <div class="hidden md:flex flex-col justify-between p-12 text-white relative overflow-hidden auth-bg">
             <div class="absolute inset-0 bg-black/60"></div>
+
             <div class="relative z-10">
-                <img src="{{ asset('images/logo.png') }}" alt="OneDry Logo" class="h-12 w-auto mb-6 filter brightness-0 invert">
+                <img src="{{ asset('images/logo.png') }}" alt="OneDry Logo"
+                     class="h-12 w-auto mb-6 filter brightness-0 invert">
             </div>
+
             <div class="relative z-10">
-                <h1 class="text-4xl font-bold mb-4 leading-tight">Selamat datang di aplikasi Onedry</h1>
-                <p class="text-gray-200">Silahkan masuk dengan email anda untuk mengakses</p>
+                <h1 class="text-4xl font-bold mb-4 leading-tight">Selamat datang di aplikasi OneDry</h1>
+                <p class="text-gray-200">Silahkan login menggunakan akun yang tersedia</p>
             </div>
         </div>
 
-        <!-- Right Column -->
+        <!-- RIGHT SIDE -->
         <div class="flex flex-col justify-center p-8 md:p-12 bg-white border-l border-purple-200">
             <div class="w-full max-w-md mx-auto">
-                <!-- Mobile Logo -->
+
+                <!-- MOBILE LOGO -->
                 <div class="flex flex-col items-center mb-8 md:hidden">
-                    <img src="{{ asset('images/logo.png') }}" alt="OneDry Logo" class="h-16 w-auto mb-2 filter brightness-0 invert">
+                    <img src="{{ asset('images/logo.png') }}" alt="OneDry Logo"
+                         class="h-16 w-auto mb-2 filter brightness-0 invert">
                     <p class="text-sm text-gray-500">Sistem Laundry</p>
                 </div>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-8 text-center">Masuk ke Akun Anda</h2>
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+                    Masuk ke Akun Anda
+                </h2>
 
+                <!-- 🔔 SISTEM MASA PERCOBAAN -->
+                <div class="bg-purple-50 border border-purple-200 text-purple-700 p-4 rounded-lg mb-6 text-sm shadow-sm">
+                    <p class="font-semibold">🔧 Sistem dalam masa percobaan</p>
+                    <p class="mt-1">Gunakan akun berikut untuk login:</p>
+
+                    <div class="mt-3 text-gray-700">
+                        <p class="font-medium">👤 Admin/Karyawan:</p>
+                        <p class="text-xs">Email: <span class="font-semibold">mimin@gmail.com</span></p>
+                        <p class="text-xs mb-3">Password: <span class="font-semibold">miminn1234</span></p>
+
+                        <p class="font-medium">👑 Owner:</p>
+                        <p class="text-xs">Email: <span class="font-semibold">owner@gmail.com</span></p>
+                        <p class="text-xs">Password: <span class="font-semibold">12345678</span></p>
+                    </div>
+                </div>
+
+                <!-- LOGIN FORM -->
                 <form method="POST" action="{{ route('login') }}" class="space-y-6">
                     @csrf
 
@@ -81,7 +109,7 @@
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
                         <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-200">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
                         @error('email')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -89,16 +117,9 @@
 
                     <!-- Password -->
                     <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                            @if (Route::has('password.request'))
-                                <a href="{{ route('password.request') }}" class="text-sm text-purple-600 hover:underline">
-                                    Lupa Password?
-                                </a>
-                            @endif
-                        </div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
                         <input id="password" type="password" name="password" required
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-200">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
                         @error('password')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -106,25 +127,26 @@
 
                     <!-- Remember Me -->
                     <div class="flex items-center">
-                        <input id="remember_me" type="checkbox" name="remember" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
-                        <label for="remember_me" class="ml-2 block text-sm text-gray-700">
-                            Ingat saya
-                        </label>
+                        <input id="remember_me" type="checkbox" name="remember"
+                               class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
+                        <label for="remember_me" class="ml-2 block text-sm text-gray-700">Ingat saya</label>
                     </div>
 
                     <!-- Login Button -->
-                    <button type="submit" class="w-full bg-purple-600 text-white py-2.5 px-4 rounded-lg font-medium hover:bg-purple-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                    <button type="submit"
+                            class="w-full bg-purple-600 text-white py-2.5 px-4 rounded-lg font-medium hover:bg-purple-700 transition">
                         Masuk
                     </button>
                 </form>
 
-                <!-- Register Link -->
-                <p class="mt-6 text-center text-sm text-gray-500">
-                    Belum punya akun? 
-                    <a href="{{ route('register') }}" class="font-medium text-purple-600 hover:text-purple-500">Daftar Sekarang</a>
+                <!-- Hilangkan REGISTER -->
+                <p class="mt-6 text-center text-sm text-gray-400">
+                    Sistem login hanya untuk pengguna terdaftar
                 </p>
+
             </div>
         </div>
     </div>
+
 </body>
 </html>

@@ -16,6 +16,7 @@
                         secondary: '#9333ea',
                         accent: '#c084fc',
                         sidebar: '#faf5ff',
+                        softgray: '#e5e7eb' /* Abu-abu sedikit lebih gelap */
                     }
                 }
             }
@@ -24,6 +25,7 @@
 
     <style>
         body { font-family: 'Inter', sans-serif; }
+
         .menu-active {
             background: linear-gradient(to right, #7e22ce, #9333ea);
             color: #fff !important;
@@ -31,10 +33,15 @@
         .menu-active:hover {
             background: linear-gradient(to right, #6b21a8, #7e22ce);
         }
+
+        /* Background abu abu gelap */
+        .main-bg {
+            background-color: #e5e7eb !important; /* gray-200 */
+        }
     </style>
 </head>
 
-<body class="bg-gray-100 text-gray-800 flex min-h-screen">
+<body class="text-gray-900 flex min-h-screen">
 
     <!-- 🌈 SIDEBAR -->
     <aside class="w-72 bg-gradient-to-b from-purple-700 via-purple-800 to-indigo-900 text-white flex flex-col shadow-lg">
@@ -51,36 +58,33 @@
         <!-- MENU -->
         <nav class="flex-1 p-4 space-y-2 text-sm font-medium">
 
-            <!-- Dashboard -->
             <a href="{{ route('dashboard') }}"
                class="block py-2 px-4 rounded-md transition hover:bg-purple-600/40 
                {{ request()->routeIs('dashboard') ? 'menu-active' : '' }}">
                 🏠 Dashboard
             </a>
 
-            <!-- Pelanggan -->
             <a href="{{ route('pelanggan.index') }}"
                class="block py-2 px-4 rounded-md transition hover:bg-purple-600/40 
                {{ request()->routeIs('pelanggan.*') ? 'menu-active' : '' }}">
                 👥 Pelanggan
             </a>
 
-            <!-- Layanan -->
+            @if(auth()->user()->role === 'owner')
             <a href="{{ route('layanan.index') }}"
                class="block py-2 px-4 rounded-md transition hover:bg-purple-600/40 
                {{ request()->routeIs('layanan.*') ? 'menu-active' : '' }}">
                 ⚙️ Layanan
             </a>
+            @endif
 
-            <!-- Transaksi -->
             <a href="{{ route('transaksi.index') }}"
                class="block py-2 px-4 rounded-md transition hover:bg-purple-600/40 
                {{ request()->routeIs('transaksi.*') ? 'menu-active' : '' }}">
                 💸 Transaksi
             </a>
 
-            <!-- Laporan (Owner Only) -->
-            @if(auth()->user()->role === 'owner')
+            @if(in_array(auth()->user()->role, ['admin', 'owner']))
                 <a href="{{ route('laporan.index') }}"
                 class="block py-2 px-4 rounded-md transition hover:bg-purple-600/40 
                 {{ request()->routeIs('laporan.*') ? 'menu-active' : '' }}">
@@ -88,7 +92,6 @@
                 </a>
             @endif
 
-            <!-- Pengaturan akun (Owner Only) -->
             @if(auth()->user()->role === 'owner')
                 <a href="{{ route('pengaturan.index') }}"
                 class="block py-2 px-4 rounded-md transition hover:bg-purple-600/40 
@@ -97,7 +100,6 @@
                 </a>
             @endif
 
-            <!-- Profil -->
             <a href="{{ route('profile.edit') }}"
                class="block py-2 px-4 rounded-md transition hover:bg-purple-600/40 
                {{ request()->routeIs('profile.*') ? 'menu-active' : '' }}">
@@ -107,10 +109,9 @@
         </nav>
 
         <!-- FOOTER USER -->
-        <div class="p-4 border-t border-purple-400/40 bg-purple-900/30 text-purple-100">
+        <div class="p-4 border-t border-purple-300/40 bg-purple-900/30">
             <p class="text-xs mb-2">Masuk sebagai:</p>
 
-            <!-- FOTO PROFIL DI SIDEBAR -->
             <div class="flex items-center gap-3">
                 @if(auth()->user()->foto)
                     <img src="{{ asset('storage/profile_photos/' . auth()->user()->foto) }}"
@@ -135,15 +136,15 @@
                 </button>
             </form>
         </div>
+
     </aside>
 
-    <!-- MAIN CONTENT -->
-    <main class="flex-1 p-8 bg-gray-50">
+    <!-- MAIN CONTENT – BACKGROUND ABU-ABU GELAP -->
+    <main class="flex-1 p-8 main-bg">
         <div class="flex items-center justify-between mb-6">
 
             <h2 class="text-3xl font-bold text-gray-800">@yield('title', 'Dashboard')</h2>
 
-            <!-- FOTO PROFIL HEADER -->
             <div>
                 @if(auth()->user()->foto)
                     <img src="{{ asset('storage/profile_photos/' . auth()->user()->foto) }}"
@@ -157,14 +158,12 @@
             </div>
         </div>
 
-        <!-- ALERT -->
         @if(session('success'))
             <div class="bg-green-100 text-green-800 px-4 py-2 mb-4 rounded shadow">
                 {{ session('success') }}
             </div>
         @endif
 
-        <!-- CONTENT -->
         <div class="animate-fade-in">
             @yield('content')
         </div>

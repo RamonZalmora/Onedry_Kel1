@@ -45,12 +45,20 @@
                 </select>
             </div>
 
-            <!-- Tanggal -->
+            <!-- Tanggal Transaksi -->
             <div>
                 <label class="block font-semibold text-gray-700 mb-1">Tanggal Transaksi</label>
                 <input type="date" name="tanggal"
                        class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-purple-500 focus:ring-purple-500 transition"
                        required>
+            </div>
+
+            <!-- Tanggal Diambil -->
+            <div>
+                <label class="block font-semibold text-gray-700 mb-1">Tanggal Diambil (opsional)</label>
+                <input type="date" name="tanggal_diambil"
+                       class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-purple-500 focus:ring-purple-500 transition"
+                       placeholder="Pilih tanggal pengambilan (jika sudah diketahui)">
             </div>
 
             <!-- Layanan -->
@@ -120,7 +128,7 @@
             <li><strong>Pilih layanan</strong> sesuai pesanan pelanggan.</li>
             <li><strong>Perkiraan total</strong> akan muncul otomatis.</li>
             <li><strong>Foto cucian</strong> tidak wajib, namun sangat membantu dokumentasi.</li>
-            <li><strong>Tanggal transaksi</strong> otomatis mencatat waktu masuk laundry.</li>
+            <li><strong>Tanggal diambil</strong> opsional dan bisa diisi jika pelanggan sudah menentukan.</li>
         </ul>
     </div>
 

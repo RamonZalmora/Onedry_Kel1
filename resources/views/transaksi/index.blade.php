@@ -22,55 +22,76 @@
                 <th class="p-3 text-left font-semibold">Berat</th>
                 <th class="p-3 text-left font-semibold">Total</th>
                 <th class="p-3 text-left font-semibold">Status</th>
-                <th class="p-3 text-left font-semibold">Tanggal Diantar</th>
+                <th class="p-3 text-left font-semibold">Tanggal</th>
                 <th class="p-3 text-left font-semibold">Tanggal Diambil</th>
                 <th class="p-3 text-left font-semibold w-40">Aksi</th>
             </tr>
         </thead>
+
         <tbody>
             @forelse($transaksis as $t)
             <tr class="border-b hover:bg-purple-50 transition">
-                <td class="p-3 text-gray-800 font-semibold">{{ $t->kode }}</td>
+                <td class="p-3 font-semibold text-gray-800">{{ $t->kode }}</td>
                 <td class="p-3 text-gray-700">{{ $t->pelanggan->nama ?? '-' }}</td>
                 <td class="p-3 text-gray-700">{{ $t->layanan->nama ?? '-' }}</td>
                 <td class="p-3 text-gray-700">{{ number_format($t->berat, 2, ',', '.') }} Kg</td>
-                <td class="p-3 text-gray-800 font-semibold">Rp {{ number_format($t->total, 0, ',', '.') }}</td>
+                <td class="p-3 font-semibold text-gray-800">
+                    Rp {{ number_format($t->total, 0, ',', '.') }}
+                </td>
 
-                {{-- STATUS BADGE --}}
+                {{-- Status Badge --}}
                 <td class="p-3">
                     @php $status = strtolower($t->status); @endphp
 
                     @if($status == 'baru')
-                        <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-semibold shadow-sm">🕓 Baru</span>
+                        <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-semibold">🕓 Baru</span>
                     @elseif($status == 'proses')
-                        <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-semibold shadow-sm">🔧 Proses</span>
+                        <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-semibold">🔧 Proses</span>
                     @elseif($status == 'selesai')
-                        <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold shadow-sm">✅ Selesai</span>
+                        <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">✅ Selesai</span>
                     @elseif($status == 'diambil')
-                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-semibold shadow-sm">📦 Diambil</span>
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-semibold">📦 Diambil</span>
                     @else
-                        <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-semibold shadow-sm">{{ ucfirst($t->status) }}</span>
+                        <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-semibold">{{ ucfirst($t->status) }}</span>
                     @endif
                 </td>
 
                 <td class="p-3 text-gray-700">
-    {{ \Carbon\Carbon::parse($t->tanggal)->format('d M Y') }}
-</td>
+                    {{ \Carbon\Carbon::parse($t->tanggal)->format('d M Y') }}
+                </td>
 
-                <td>
-    {{ $t->tanggal_diambil ? \Carbon\Carbon::parse($t->tanggal_diambil)->format('d/m/Y') : '-' }}
-</td>
+                <td class="p-3 text-gray-700">
+                    {{ $t->tanggal_diambil ? \Carbon\Carbon::parse($t->tanggal_diambil)->format('d M Y') : '-' }}
+                </td>
 
+                {{-- Tombol Aksi --}}
+                <td class="p-3 flex items-center gap-2">
 
-                {{-- AKSI --}}
-                <td class="p-3 flex items-center gap-3">
+                    <!-- DETAIL -->
                     <a href="{{ route('transaksi.show', $t->id) }}" 
-                       class="text-indigo-600 hover:text-indigo-800 font-semibold transition">🔍 Detail</a>
+                       class="px-3 py-1 bg-indigo-500 text-white rounded-lg shadow hover:bg-indigo-600 transition">
+                        🔍 Detail
+                    </a>
+
+                    <!-- HAPUS -->
+                    <form action="{{ route('transaksi.destroy', $t->id) }}" 
+                          method="POST"
+                          onsubmit="return confirm('Yakin ingin menghapus transaksi ini?')">
+                        @csrf
+                        @method('DELETE')
+
+                        <button class="px-3 py-1 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition">
+                            🗑️ Hapus
+                        </button>
+                    </form>
+
                 </td>
             </tr>
             @empty
             <tr>
-                <td colspan="7" class="p-4 text-center text-gray-500 italic">Belum ada transaksi yang tercatat.</td>
+                <td colspan="8" class="p-4 text-center text-gray-500 italic">
+                    Belum ada transaksi.
+                </td>
             </tr>
             @endforelse
         </tbody>
