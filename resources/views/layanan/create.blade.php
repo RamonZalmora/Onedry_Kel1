@@ -1,151 +1,130 @@
 @extends('layouts.app')
+@section('title', 'Tambah Layanan')
 @section('content')
-<div class="mb-6">
-    <h1 class="text-3xl font-bold">Tambah Layanan Baru</h1>
-    <p class="text-sm text-slate-500 mt-1">Tambahkan jenis layanan cucian yang baru</p>
+
+<!-- HEADER -->
+<div class="mb-8">
+    <h1 class="text-3xl font-extrabold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+        ➕ Tambah Layanan Baru
+    </h1>
+    <p class="text-sm text-slate-500 mt-1">Pilih template layanan atau isi secara manual</p>
 </div>
 
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <!-- Form -->
-    <div class="lg:col-span-2">
-        <form action="{{ route('layanan.store') }}" method="POST" class="bg-white rounded-2xl shadow-md p-8">
-            @csrf
 
-            <div class="space-y-5">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-                <!-- Nama -->
-                <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Nama Layanan</label>
+    <!-- FORM CARD -->
+    <form action="{{ route('layanan.store') }}" method="POST"
+        class="glass border border-purple-100 rounded-2xl shadow-xl p-8 space-y-6 backdrop-blur-xl">
+        @csrf
 
-                    <select 
-                        name="nama" 
-                        id="nama_layanan"
-                        class="w-full px-4 py-2 rounded-lg border border-slate-200 bg-white focus:shadow-md focus:border-blue-300 focus:ring-0 transition"
-                        required
-                    >
-                        <option value="">-- Pilih Layanan --</option>
+        <!-- Template -->
+        <div>
+            <label class="block font-semibold text-gray-700 mb-2">Template Layanan</label>
 
-                        <!-- Per Kg -->
-                        <option value="Cuci Lipat" data-tipe="per_kg" data-harga="7000">Cuci Lipat (Per Kg)</option>
-                        <option value="Cuci Setrika" data-tipe="per_kg" data-harga="9000">Cuci Setrika (Per Kg)</option>
-                        <option value="Setrika Saja" data-tipe="per_kg" data-harga="6000">Setrika Saja (Per Kg)</option>
-                        <option value="Dry Cleaning" data-tipe="per_kg" data-harga="20000">Dry Cleaning (Per Kg)</option>
+            <select id="templateLayanan"
+                class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-purple-500 focus:ring-purple-500 transition">
+                <option value="">🌟 Pilih Template Otomatis</option>
 
-                        <!-- Laundry Satuan -->
-                        <option value="Laundry Satuan" data-tipe="per_item">Laundry Satuan</option>
-                    </select>
+                <optgroup label="Per Kg">
+                    <option value="Cuci Lipat" data-tipe="per_kg" data-harga="7000">Cuci Lipat (7.000 / Kg)</option>
+                    <option value="Cuci Setrika" data-tipe="per_kg" data-harga="9000">Cuci Setrika (9.000 / Kg)</option>
+                    <option value="Setrika Saja" data-tipe="per_kg" data-harga="6000">Setrika Saja (6.000 / Kg)</option>
+                    <option value="Dry Cleaning" data-tipe="per_kg" data-harga="20000">Dry Cleaning (20.000 / Kg)</option>
+                </optgroup>
 
-                    @error('nama')
-                        <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
-                    @enderror
-                </div>
+                <optgroup label="Per Item">
+                    <option value="Laundry Satuan" data-tipe="per_item">Laundry Satuan</option>
+                </optgroup>
+            </select>
+        </div>
 
-                <!-- Tipe -->
-                <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Tipe Layanan</label>
-                    <input 
-                        type="text" 
-                        name="tipe" 
-                        id="tipe_layanan"
-                        class="w-full px-4 py-2 rounded-lg border border-slate-200 bg-gray-100"
-                        readonly
-                        required
-                    >
-                    @error('tipe')
-                        <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
-                    @enderror
-                </div>
+        <!-- Nama -->
+        <div>
+            <label class="block font-semibold text-gray-700 mb-2">Nama Layanan</label>
+            <input type="text" name="nama" id="nama"
+                class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-purple-500 focus:ring-purple-500 transition"
+                placeholder="Cuci Lipat, Setrika Saja, Laundry Satuan, dll" required>
+        </div>
 
-                <!-- Sub Item Laundry Satuan -->
-                <div id="sub_item_container" style="display:none;">
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Jenis Item</label>
+        <!-- Tipe -->
+        <div>
+            <label class="block font-semibold text-gray-700 mb-2">Tipe</label>
+            <select name="tipe" id="tipe"
+                class="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:border-purple-500 focus:ring-purple-500 transition"
+                required>
+                <option value="">-- Pilih Tipe --</option>
+                <option value="per_kg">Per Kg</option>
+                <option value="per_item">Per Item</option>
+            </select>
+        </div>
 
-                    <select 
-                        name="sub_item"
-                        id="sub_item"
-                        class="w-full px-4 py-2 rounded-lg border border-slate-200 bg-white focus:shadow-md focus:border-blue-300 focus:ring-0 transition"
-                    >
-                        <option value="">-- Pilih Item --</option>
-                        <option value="Kaos / Celana Biasa" data-harga="8000">Kaos / Celana Biasa - Rp 8.000</option>
-                        <option value="Kemeja" data-harga="10000">Kemeja - Rp 10.000</option>
-                        <option value="Jeans" data-harga="12000">Jeans - Rp 12.000</option>
-                        <option value="Jaket / Hoodie" data-harga="15000">Jaket / Hoodie - Rp 15.000</option>
-                        <option value="Jas" data-harga="25000">Jas - Rp 25.000</option>
-                        <option value="Gaun" data-harga="25000">Gaun - Rp 25.000</option>
-                        <option value="Baju Batik" data-harga="12000">Baju Batik - Rp 12.000</option>
-                    </select>
-                </div>
+        <!-- Sub Item -->
+        <div id="subItemBox" style="display:none;">
+            <label class="block font-semibold text-gray-700 mb-2">Sub Item</label>
+            <input type="text" name="sub_item" id="sub_item"
+                class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-purple-500 focus:ring-purple-500 transition"
+                placeholder="Contoh: Kemeja, Batik, Jas, Hoodie, dll">
+        </div>
 
-                <!-- Harga -->
-                <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Harga</label>
-
-                    <div class="relative">
-                        <span class="absolute left-4 top-2.5 text-slate-500 font-semibold">Rp</span>
-                        <input 
-                            type="number" 
-                            name="harga" 
-                            id="harga_layanan"
-                            class="w-full pl-12 pr-4 py-2 rounded-lg border border-slate-200 bg-gray-100"
-                            readonly
-                            required
-                        >
-                    </div>
-                </div>
+        <!-- Harga -->
+        <div>
+            <label class="block font-semibold text-gray-700 mb-2">Harga</label>
+            <div class="relative">
+                <span class="absolute left-3 top-2.5 text-gray-500 font-semibold">Rp</span>
+                <input type="number" name="harga" id="harga"
+                    class="w-full pl-10 px-4 py-2 rounded-lg border border-gray-300 focus:border-purple-500 focus:ring-purple-500 transition"
+                    placeholder="0" required>
             </div>
+        </div>
 
-            <!-- Action Buttons -->
-            <div class="flex gap-3 mt-8 pt-6 border-t border-slate-200">
-                <button type="submit" class="flex-1 px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold shadow-sm">
-                    Simpan Layanan
-                </button>
-                <a href="{{ route('layanan.index') }}" class="flex-1 px-6 py-2.5 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition font-semibold text-center">
-                    Batal
-                </a>
-            </div>
-        </form>
-    </div>
+        <!-- Button -->
+        <button
+            class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 rounded-lg font-semibold shadow-lg hover:scale-105 transition-transform">
+            💾 Simpan Layanan
+        </button>
+    </form>
+
 
     <!-- Info Box -->
-    <div class="lg:col-span-1">
-        <div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl shadow-md p-6 sticky top-8">
-            <h3 class="font-semibold text-slate-900 mb-3">💡 Jenis Layanan</h3>
-            <ul class="text-sm text-slate-700 space-y-3">
-                <li>
-                    <strong class="text-indigo-600">Per Kilogram</strong>
-                    <p class="text-xs mt-0.5">Harga dihitung berdasarkan berat dalam kg</p>
-                </li>
-                <li>
-                    <strong class="text-indigo-600">Per Item</strong>
-                    <p class="text-xs mt-0.5">Harga dihitung berdasarkan jumlah item</p>
-                </li>
-            </ul>
-        </div>
+    <div class="bg-white rounded-2xl shadow-lg p-6 border border-purple-100">
+        <h3 class="text-xl font-semibold text-purple-700 mb-4">📘 Informasi Layanan</h3>
+
+        <ul class="text-gray-700 text-sm space-y-3 leading-relaxed">
+            <li>
+                <strong class="text-purple-600">Per Kg</strong><br>
+                Digunakan untuk layanan berbasis berat cucian (contoh: Cuci Lipat, Dry Cleaning).
+            </li>
+
+            <li>
+                <strong class="text-purple-600">Per Item</strong><br>
+                Digunakan untuk laundry pakaian tertentu seperti: Kemeja, Jas, Hoodie, Batik, dll.
+            </li>
+
+            <li class="bg-purple-50 border border-purple-200 rounded-lg p-3 text-purple-800 text-sm">
+                Jika memilih "<strong>Laundry Satuan</strong>", kamu dapat menentukan sub item secara manual.
+            </li>
+        </ul>
     </div>
+
 </div>
 
+
 <script>
-document.getElementById('nama_layanan').addEventListener('change', function () {
-    let opt   = this.options[this.selectedIndex];
-    let tipe  = opt.getAttribute('data-tipe');
-    let harga = opt.getAttribute('data-harga');
+document.getElementById('templateLayanan').addEventListener('change', function () {
+    let opt = this.options[this.selectedIndex];
 
-    if (this.value === 'Laundry Satuan') {
-        document.getElementById('sub_item_container').style.display = 'block';
-        document.getElementById('harga_layanan').value = '';
-        document.getElementById('tipe_layanan').value  = 'per_item';
+    document.getElementById('nama').value = opt.value || "";
+    document.getElementById('tipe').value = opt.dataset.tipe || "";
+    document.getElementById('harga').value = opt.dataset.harga || "";
+
+    // Show/hide sub item
+    if (opt.dataset.tipe === "per_item") {
+        document.getElementById('subItemBox').style.display = "block";
     } else {
-        document.getElementById('sub_item_container').style.display = 'none';
-        document.getElementById('sub_item').value = '';
-        document.getElementById('tipe_layanan').value  = tipe ?? '';
-        document.getElementById('harga_layanan').value = harga ?? '';
+        document.getElementById('subItemBox').style.display = "none";
+        document.getElementById('sub_item').value = "";
     }
-});
-
-// Sub Item Change
-document.getElementById('sub_item').addEventListener('change', function () {
-    let harga = this.options[this.selectedIndex].getAttribute('data-harga');
-    document.getElementById('harga_layanan').value = harga;
 });
 </script>
 

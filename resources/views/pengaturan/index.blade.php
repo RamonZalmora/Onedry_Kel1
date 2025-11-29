@@ -24,7 +24,7 @@
             <table class="min-w-full text-sm">
                 <thead>
                     <tr class="bg-purple-50 text-purple-700 border-b">
-                        <th class="px-4 py-3 font-semibold">Nama</th>
+                        <th class="px-4 py-3 font-semibold">Akun</th>
                         <th class="px-4 py-3 font-semibold">Email</th>
                         <th class="px-4 py-3 font-semibold">Role</th>
                         <th class="px-4 py-3 font-semibold text-center">Aksi</th>
@@ -34,29 +34,58 @@
                 <tbody>
                     @foreach($users as $user)
                         <tr class="border-b hover:bg-gray-50 transition">
-                            <td class="px-4 py-3">{{ $user->name }}</td>
+
+                            <!-- FOTO PROFIL / AVATAR -->
+                            <td class="px-4 py-3 flex items-center gap-4">
+
+                                <!-- Jika user punya foto -->
+                                @if($user->foto)
+                                    <img
+                                        src="{{ asset('storage/profile_photos/' . $user->foto) }}"
+                                        class="h-12 w-12 rounded-full object-cover shadow-md"
+                                        alt="Foto Profil">
+                                @else
+                                    <!-- Avatar huruf -->
+                                    <div class="h-12 w-12 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 
+                                                text-white text-lg font-bold flex items-center justify-center shadow-md">
+                                        {{ strtoupper(substr($user->name, 0, 1)) }}
+                                    </div>
+                                @endif
+
+                                <!-- Nama -->
+                                <span class="text-gray-800 font-medium text-base">
+                                    {{ $user->name }}
+                                </span>
+                            </td>
+
+                            <!-- Email -->
                             <td class="px-4 py-3">{{ $user->email }}</td>
+
+                            <!-- Role -->
                             <td class="px-4 py-3 capitalize">{{ $user->role }}</td>
-                            <td class="px-4 py-3 flex items-center justify-center gap-3">
 
-                                <!-- Tombol Edit -->
-                                <a href="{{ route('pengaturan.edit', $user->id) }}"
-                                   class="px-3 py-1 bg-blue-500 text-white rounded shadow hover:bg-blue-600 transition">
-                                    Edit
-                                </a>
+                            <!-- Aksi -->
+                            <td class="px-4 py-3 text-center">
 
-                                <!-- Tombol Hapus -->
                                 @if($user->id !== auth()->id())
-                                <form action="{{ route('pengaturan.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Hapus akun ini?')">
+                                <form action="{{ route('pengaturan.destroy', $user->id) }}"
+                                      method="POST"
+                                      onsubmit="return confirm('Hapus akun ini?')"
+                                      class="inline-block">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="px-3 py-1 bg-red-600 text-white rounded shadow hover:bg-red-700 transition">
+
+                                    <button
+                                        class="px-3 py-1 bg-red-600 text-white rounded shadow hover:bg-red-700 transition">
                                         Hapus
                                     </button>
                                 </form>
+                                @else
+                                    <span class="text-gray-400 text-xs">Akun Anda</span>
                                 @endif
 
                             </td>
+
                         </tr>
                     @endforeach
                 </tbody>

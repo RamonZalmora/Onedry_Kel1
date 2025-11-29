@@ -28,7 +28,7 @@
             <select name="role" class="w-full border-gray-300 rounded-lg shadow-sm" required>
                 <option value="admin">Admin</option>
                 <option value="owner">Owner</option>
-                <option value="karyawan">Karyawan</option>
+                
             </select>
         </div>
 
