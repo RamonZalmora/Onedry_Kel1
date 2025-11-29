@@ -26,11 +26,8 @@ OneDry dirancang untuk membantu operasional laundry seperti:
 - [🔐 Akun Login](#-akun-login-sistem)
 - [➕ Fitur Opsional](#-fitur-opsional)
 - [🛠️ Teknologi](#️-teknologi-yang-digunakan)
-- [📸 Screenshot](#-screenshot)
-- [🤝 Kontribusi](#-kontribusi)
 
 ---
-
 ## ✨ Fitur Utama
 
 <table>
@@ -68,7 +65,7 @@ OneDry dirancang untuk membantu operasional laundry seperti:
 
 ## 🚀 Instalasi
 
-> **Prerequisites:** Pastikan Anda telah menginstall PHP 8.1+, Composer, MySQL, dan Node.js
+> **Prerequisites:** Pastikan Anda telah menginstall PHP 8.1+, Composer, dan Node.js
 
 ### Quick Start
 
@@ -110,7 +107,6 @@ Pastikan sistem Anda memenuhi requirements:
 
 - **PHP** >= 8.1
 - **Composer**
-- **MySQL** / SqlLite
 - **Node.js & NPM** (untuk compile assets)
 
 ---
@@ -172,7 +168,7 @@ npm run build
 |--------------------|----------------------------|
 | **Laravel**        | 10.x                       |
 | **PHP**            | 8.1+                       |
-| **MySQL/sqlLite**  | Database                   |
+| **sqlLite**        | Database                   |
 | **Tailwind CSS**   | Framework CSS              |
 | **Blade Template** | Template Engine            |
 | **Chart.js**       | Library Visualisasi Data   |
@@ -183,24 +179,9 @@ npm run build
 
 ---
 
-## 📝 Catatan
-
-- Pastikan ekstensi PHP yang diperlukan sudah aktif (`pdo_mysql`, `mbstring`, `openssl`, dll)
-- Untuk development, gunakan `npm run dev`
-- Untuk production, gunakan `npm run build`
-- Jangan lupa backup database sebelum menjalankan `migrate:fresh`
-
----
-
 ## 👥 Tim Pengembang
 
 **Kelompok 1 SistemInformasi Universitas Riau 2025**
-
----
-
-## 🤝 Kontribusi
-
-Jika ingin berkontribusi, silakan fork repository ini dan buat pull request.
 
 ---
 
