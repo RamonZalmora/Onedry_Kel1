@@ -1,167 +1,72 @@
-🧺 OneDry – Laundry Management System
+# 🧺 OneDry – Sistem Manajemen Laundry
 
-OneDry adalah sistem manajemen laundry berbasis web yang dikembangkan oleh Kelompok 1.
-Aplikasi ini dirancang untuk membantu pengelolaan operasional laundry menjadi lebih cepat, efisien, dan rapi melalui sistem digital yang modern, aman, dan mudah digunakan.
+[![Versi Laravel](https://img.shields.io/badge/Laravel-10.x-FF2D20?style=for-the-badge&logo=laravel)](https://laravel.com/)
+[![PHP Versi](https://img.shields.io/badge/PHP-8.1+-777BB4?style=for-the-badge&logo=php)](https://www.php.net/)
+[![Dibangun dengan TailwindCSS](https://img.shields.io/badge/Styling-TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 
-🖥️ ✨ Teknologi yang Digunakan
+**OneDry** adalah sistem manajemen laundry berbasis web yang dikembangkan oleh **Kelompok 1**. Aplikasi ini dirancang untuk mengoptimalkan operasional bisnis laundry, mulai dari pengelolaan data pelanggan hingga pembuatan laporan keuangan.
 
-OneDry dibangun menggunakan teknologi modern yang umum digunakan pada industri:
+Dibangun menggunakan **Laravel 10**, **TailwindCSS**, dan **Blade Template**, OneDry menawarkan antarmuka pengguna yang modern, cepat, dan responsif.
 
-Komponen	Teknologi
-Backend	Laravel 10
-Frontend	Blade Template + TailwindCSS
-Database	MySQL
-Authentication	Laravel Breeze
-UI Styling	TailwindCSS 3
-Storage	Laravel Storage (Public Disk)
-Authorization	Role-based (Owner & Admin)
-Chart	Chart.js
-Testing	Laravel PHPUnit
-Package Manager	Composer & NPM
-⚙️ Fitur Utama OneDry
+---
 
-Berikut fitur yang tersedia dalam sistem:
+### 🌟 Fitur Utama
 
-👤 Autentikasi & Role
+OneDry dirancang untuk mendukung berbagai aspek operasional laundry:
 
-Login secure (Laravel Breeze)
+* **👥 Manajemen Pelanggan:** Pengelolaan data pelanggan yang terperinci.
+* **💸 Transaksi Otomatis:** Input transaksi yang mudah dengan perhitungan biaya otomatis.
+* **📦 Monitoring Status Cucian:** Status real-time (**baru, proses, selesai, diambil**) untuk setiap order.
+* **🖼️ Upload Foto Cucian:** Fitur untuk mendokumentasikan kondisi cucian sebelum proses.
+* **📊 Laporan Komprehensif:** Pembuatan Laporan Harian & Bulanan (Khusus Owner).
+* **⚙️ Pengaturan Bisnis:** Pengaturan Layanan Laundry dan Harga (Khusus Owner).
+* **🔐 Sistem Otorisasi:** Akses fitur berbasis **Role-based Authorization** (**Owner & Admin/Karyawan**).
 
-Role-based access: Owner dan Admin
+---
 
-Profil + upload foto profil
+### 📦 Fitur Unggulan Lainnya
 
-👥 Manajemen Pelanggan
+| Kategori | Fitur | Deskripsi |
+| :--- | :--- | :--- |
+| **Teknis & UI** | 🎨 **UI Modern** | Antarmuka yang bersih dan responsif berkat TailwindCSS. |
+| | 📈 **Grafik Pendapatan** | Visualisasi pendapatan mingguan menggunakan Chart.js. |
+| | ⏱️ **Realtime Data** | Tampilan waktu server dan status yang diperbarui secara *realtime*. |
+| | 🌤️ **Weather Widget** | Widget cuaca lokal untuk membantu operasional laundry (menggunakan Open-Meteo API). |
+| **Manajemen Akun** | 🧑‍💼 **Manajemen Akun** | Pengaturan dan pengelolaan akun pengguna (Khusus Owner). |
 
-Tambah, edit, hapus pelanggan
+---
 
-Daftar pelanggan lengkap
+### 🛠️ Teknologi yang Digunakan
 
-Validasi input
+| Kategori | Teknologi | Versi / Keterangan |
+| :--- | :--- | :--- |
+| **Backend** | Laravel | 10.x |
+| | PHP | 8.1+ |
+| | Database | MySQL |
+| **Frontend** | Styling | TailwindCSS |
+| | Template Engine | Blade Template |
+| | Grafik | Chart.js |
+| **Pendukung** | Scaffolding | Laravel Breeze |
+| | Paket & Dependensi | Composer, Vite + NPM |
+| | Integrasi | Open-Meteo API |
 
-⚙️ Manajemen Layanan Laundry
+---
 
-Owner dapat menambah layanan baru
+### 🚀 Panduan Instalasi Cepat
 
-Edit harga layanan
+Ikuti langkah-langkah di bawah ini untuk menyiapkan sistem OneDry setelah mengkloning repositori.
 
-Mendukung 2 tipe layanan:
-
-Per Kg
-
-Per Item (dengan sub-item)
-
-💸 Transaksi Laundry
-
-Input transaksi baru
-
-Upload foto cucian
-
-Perkiraan total otomatis
-
-Status cucian (baru → proses → selesai → diambil)
-
-Riwayat transaksi per pelanggan
-
-🧾 Laporan (Owner & Admin)
-
-Laporan harian
-
-Laporan bulanan
-
-Export PDF
-
-Export Excel
-
-🧑‍💼 Manajemen Akun (Owner)
-
-Owner dapat membuat akun admin baru
-
-Owner dapat menghapus atau mengedit data akun admin
-
-📸 Upload Foto
-
-Laundry photos
-
-Profil user
-
-Semua file disimpan aman via storage/app/public
-
-📊 Dashboard Modern
-
-Grafik pendapatan 7 hari terakhir
-
-Statistik real-time
-
-Widget cuaca
-
-Server time display
-
-🚀 Cara Install OneDry Setelah git clone
-
-Ikuti langkah berikut agar aplikasi berjalan normal tanpa error.
-
-1️⃣ Clone Repository
-git clone https://github.com/RamonZalmora/Onedry_Kel1.git
-
-2️⃣ Install Dependency Backend
-composer install
-
-3️⃣ Copy File Environment
-cp .env.example .env
-
-4️⃣ Generate App Key
-php artisan key:generate
-
-5️⃣ Setup Database
-
-Pastikan kamu sudah membuat database baru di phpMyAdmin.
-
-Edit file .env → sesuaikan:
-
-DB_DATABASE=onedry
+#### 1️⃣ Kloning Repositori & Navigasi
+```bash
+git clone [https://github.com/RamonZalmora/Onedry_Kel1.git](https://github.com/RamonZalmora/Onedry_Kel1.git)
+cd Onedry_Kel1
+2️⃣ Instalasi DependensiInstal dependensi PHP yang dibutuhkan menggunakan Composer:Bashcomposer install
+3️⃣ Konfigurasi Lingkungan (.env)Salin file konfigurasi lingkungan dan sesuaikan detail database Anda:Bashcp .env.example .env
+Catatan: Sesuaikan bagian database di file .env. Contoh:Ini, TOMLDB_DATABASE=onedry
 DB_USERNAME=root
 DB_PASSWORD=
-
-
-Lalu jalankan:
-
-php artisan migrate --seed
-
-
-Seeder akan otomatis membuat:
-
-akun admin
-
-akun owner
-
-sample data awal jika ada
-
-6️⃣ Link Storage (WAJIB untuk foto tampil)
-php artisan storage:link
-
-7️⃣ Jalankan Server Laravel
-php artisan serve
-
-
-Akses di:
-http://127.0.0.1:8000
-
-8️⃣ (Opsional) Jalankan Frontend Compiler
-npm install
-npm run dev
-
-9️⃣ (Opsional) Jalankan Testing
-php artisan test
-
-🔐 Akun Login Sistem
-👑 Owner
-
-Email: owner@gmail.com
-
-Password: 12345678
-
-👤 Admin / Karyawan
-
-Email: mimin@gmail.com
-
-Password: miminn1234
+4️⃣ Generate App KeyHasilkan application key untuk keamanan:Bashphp artisan key:generate
+5️⃣ Migrasi Database & Seeder (Wajib)Jalankan migrasi database dan seeder untuk mengisi data awal (termasuk akun login):Bashphp artisan migrate --seed
+6️⃣ Buat Storage LinkBuat symlink untuk akses file yang diunggah (misalnya, foto cucian):Bashphp artisan storage:link
+7️⃣ Jalankan ServerSistem siap dijalankan!Bashphp artisan serve
+🧪 Perintah OpsionalPerintahFungsiphp artisan migrate:fresh --seedReset ulang database dan jalankan seeder lagi.php artisan testMenjalankan pengujian (testing) aplikasi.npm install kemudian npm run devMenginstal dan mengkompilasi aset frontend (CSS/JS).🔐 Akun Login DefaultAnda dapat menggunakan akun default berikut untuk mengakses sistem:RoleEmailPassword👑 Ownerowner@gmail.com12345678👤 Admin / Karyawanmimin@gmail.commiminn1234📬 Kontak DeveloperTertarik untuk berdiskusi atau memberikan masukan?📧 Email: ramon.zalmora@gmail.com🐙 GitHub: https://github.com/RamonZalmora
