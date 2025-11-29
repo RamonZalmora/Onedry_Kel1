@@ -5,16 +5,16 @@
 
 <div class="bg-white shadow-lg rounded-xl p-6 border border-gray-200">
 
-    {{-- HEADER --}}
     <h2 class="text-xl font-semibold mb-4">
-        Transaksi: <span class="text-indigo-600 font-bold">{{ $transaksi->kode }}</span>
+        Transaksi: 
+        <span class="text-indigo-600 font-bold">{{ $transaksi->kode }}</span>
     </h2>
 
-    {{-- GRID 2 KOLOM --}}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
         {{-- KOLOM KIRI --}}
         <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
+
             <h3 class="text-lg font-bold mb-3">🧍 Data Pelanggan</h3>
 
             <div class="space-y-2 text-gray-700">
@@ -44,10 +44,13 @@
             @if($transaksi->foto)
             <div class="mt-5">
                 <p class="font-bold text-gray-700 mb-2">Foto Cucian</p>
-                <img src="{{ asset($transaksi->foto) }}" 
-                     class="rounded-lg shadow w-52 border border-gray-200">
+
+                <img src="{{ asset('storage/' . $transaksi->foto) }}" 
+                     class="rounded-lg shadow w-52 border border-gray-200"
+                     alt="Foto Cucian">
             </div>
             @endif
+
         </div>
 
         {{-- KOLOM KANAN --}}
@@ -66,10 +69,9 @@
                 <p><strong>Kasir:</strong> {{ $transaksi->kasir }}</p>
             </div>
         </div>
-
     </div>
 
-    {{-- FORM GANTI STATUS --}}
+    {{-- FORM UPDATE STATUS --}}
     <div class="mt-8">
         <h3 class="font-semibold text-gray-700 mb-2">Ubah Status Transaksi:</h3>
 

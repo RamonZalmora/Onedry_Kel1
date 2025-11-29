@@ -41,17 +41,11 @@ class TransaksiController extends Controller
         $layanan = Layanan::findOrFail($request->layanan_id);
         $total   = $layanan->harga * $request->berat;
 
-        // Upload foto
+        // 📌 Upload foto ke storage
         $fotoPath = null;
         if ($request->hasFile('foto')) {
-            $namaFile = time() . '_' . $request->foto->getClientOriginalName();
-
-        // Simpan ke folder public/uploads/foto_cucian
-            $request->foto->move(public_path('uploads/foto_cucian'), $namaFile);
-
-            $fotoPath = 'uploads/foto_cucian/' . $namaFile;
-}
-
+            $fotoPath = $request->file('foto')->store('foto_cucian', 'public');
+        }
 
         // Simpan transaksi
         Transaksi::create([
@@ -64,7 +58,7 @@ class TransaksiController extends Controller
             'foto'              => $fotoPath,
             'kasir'             => auth()->user()->name,
             'tanggal'           => $request->tanggal,
-            'tanggal_diambil'   => null, // default kosong
+            'tanggal_diambil'   => null,
         ]);
 
         return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil dibuat.');
@@ -78,33 +72,32 @@ class TransaksiController extends Controller
     }
 
     public function update(Request $request, Transaksi $transaksi)
-{
-    $request->validate([
-        'status' => 'required|in:baru,proses,selesai,diambil'
-    ]);
+    {
+        $request->validate([
+            'status' => 'required|in:baru,proses,selesai,diambil'
+        ]);
 
-    $tanggalDiambil = $transaksi->tanggal_diambil;
+        $tanggalDiambil = $transaksi->tanggal_diambil;
 
-    // Jika status baru diubah menjadi "selesai"
-    if ($request->status === 'selesai') {
-        $tanggalDiambil = now(); // isi otomatis tanggal hari ini
+        if ($request->status === 'selesai') {
+            $tanggalDiambil = now();
+        }
+
+        if ($request->status !== 'selesai') {
+            $tanggalDiambil = null;
+        }
+
+        $transaksi->update([
+            'status'            => $request->status,
+            'tanggal_diambil'   => $tanggalDiambil,
+        ]);
+
+        return redirect()->route('transaksi.index')->with('success', 'Status transaksi diperbarui.');
     }
-
-    // Jika status kembali diganti dari selesai ke lainnya → kosongkan
-    if ($request->status !== 'selesai') {
-        $tanggalDiambil = null;
-    }
-
-    $transaksi->update([
-        'status'            => $request->status,
-        'tanggal_diambil'   => $tanggalDiambil,
-    ]);
-
-    return redirect()->route('transaksi.index')->with('success', 'Status transaksi diperbarui.');
-}
 
     public function destroy(Transaksi $transaksi)
     {
+        // Hapus foto di storage
         if ($transaksi->foto) {
             Storage::disk('public')->delete($transaksi->foto);
         }
